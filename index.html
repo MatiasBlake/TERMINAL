@@ -1,9 +1,197 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<title></title>
+	<meta charset="UTF-8">
+	<link href="fonts/gandhi_sans_and_serif.zip" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+	<style>
+		@font-face {
+			font-family: "GandhiSans";
+			src: url("fonts/TipografiaGandhi/GandhiSans-Regular.otf") format("opentype");
+		}
+
+		body {
+
+			margin: 0;
+			color: white;
+			font-family: 'GandhiSans';
+			background: url(svg/Fondo.svg);
+			background-size: 100%;
+			background-repeat: no-repeat;
+			background-position-y: 82px;
+		}
+
+
+		main {
+			margin: 0 auto;
+			width: 80%;
+		}
+
+		header {
+			width: 100%;
+			padding-bottom: 10px;
+			border-bottom: 1px solid #e96d79;
+			background-color: #ef4748;
+		}
+
+		header .content {
+			padding-top: 20px;
+			display: flex;
+			margin: 0 7%;
+		}
+
+
+		h1,
+		h2 {
+			font-family: 'Open Sans', sans-serif;
+			margin: 0;
+		}
+
+		h1 {
+			font-size: 3em;
+		}
+
+		h2 {
+			font-size: 1.5em;
+			font-weight: normal;
+		}
+
+		main p {
+			width: 50%;
+		}
+
+		#logo {
+			width: 50px;
+			height: 50px;
+			background-image: url(svg/Logo-01.svg)
+		}
+
+		.button {
+			height: 50px;
+			background-color: #4db8b0;
+			border-radius: 20px;
+			padding: 5px;
+			width: fit-content;
+			display: flex;
+			font-weight: bold;
+			font-size: 1.1em;
+		}
+
+		section {
+			height: 50vh;
+			margin: 25vh 0;
+			/* border: 1px solid black; */
+			padding: 0;
+		}
+
+		main :first-child {
+
+			/* margin-top: 10vh; */
+		}
+
+
+		nav {
+			margin: 0 auto;
+		}
+
+		nav ul {
+			display: flex;
+		}
+
+		nav li {
+			display: block;
+			margin: 0 15px;
+		}
+
+		#search {
+			width: 50px;
+			height: 50px;
+			background-image: url(svg/Buscador-01.svg);
+			background-size: 40%;
+			background-repeat: no-repeat;
+			background-position: center;
+		}
+
+		a {
+			color: inherit;
+			text-decoration: none;
+		}
+	</style>
 </head>
+
 <body>
+	<header>
+		<div class=content>
+			<div id="logo"></div>
+			<nav>
+				<ul>
+					<li>Inicio</li>
+					<li>Historias</li>
+					<li>Orientación</li>
+					<li>Instancias</li>
+					<li><a href="herramientas.html">Herramientas</a></li>
+					<li>Materiales</li>
+					<li>Directorio</li>
+				</ul>
+
+
+			</nav>
+			<div id="search"></div>
+		</div>
+
+	</header>
+	<main>
+		<section id="inicio">
+			<h1 style="margin-bottom:0">¡El acceso a la justicia es tu derecho!</h1>
+			<h2 style="margin-top:0;">No te quedes de brazos cruzados</h2>
+			<p>
+				En México estamos acostumbrados a dejar pasar muchas cosas que violentan nuestros derechos, no sabemos
+				cuáles o no sabemos qué se puede hacer al respecto.
+			</p>
+			<p style="margin-bottom:30px;">
+
+				En la CDMX existen muchas instancias judiciales diseñadas para proteger
+				tus derechos y muchas formas de asegurar la atención por parte de ellas.
+				Aquí te explicaremos todo lo que tienes que saber para hacer uso de ellas.
+			</p>
+
+			<div class="button">
+				<img src="svg/Queja-01.svg" style="height:50px;">
+				<span style="margin: auto 10px;
+				text-align: center">¿Necesitas presentar una queja?</span>
+
+			</div>
+		</section>
+		<section id="contenido">
+			<h1 style="color:#1f5a64;">Aquí podras encontrar...</h1>
+
+		</section>
+		<section id="historias">
+
+		</section>
+		<section id="orientacion">
+
+		</section>
+		<section id="instancias">
+
+		</section>
+		<section id="herramientas">
+		</section>
+		<section id="directorio">
+		</section>
+
+
+	</main>
 
 </body>
+
+<script>
+	/*document.querySelectorAll("section").forEach(function (e, i) {
+		e.style.height = ""
+	})*/
+
+</script>
+
 </html>

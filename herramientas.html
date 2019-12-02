@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <link href="fonts/gandhi_sans_and_serif.zip" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <style>
+        @font-face {
+            font-family: "GandhiSans";
+            src: url("fonts/TipografiaGandhi/GandhiSans-Regular.otf") format("opentype");
+        }
+
+        body {
+
+            margin: 0;
+            color: white;
+            font-family: 'GandhiSans';
+            background: url(svg/Fondo.svg);
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-position-y: 82px;
+        }
+
+
+        main {
+            margin: 70px auto;
+            width: 80%;
+        }
+
+        header {
+            width: 100%;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e96d79;
+            background-color: #ef4748;
+        }
+
+        header .content {
+            padding-top: 20px;
+            display: flex;
+            margin: 0 7%;
+        }
+
+
+        h1,
+        h2 {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 3em;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            font-weight: normal;
+        }
+
+        main p {
+            width: 70%;
+        }
+
+        #logo {
+            width: 50px;
+            height: 50px;
+            background-image: url(svg/Logo-01.svg)
+        }
+
+        .button {
+            height: 50px;
+            background-color: #4db8b0;
+            border-radius: 20px;
+            padding: 5px;
+            width: fit-content;
+            display: flex;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        section {
+            height: 50vh;
+            margin: 25vh 0;
+            /* border: 1px solid black; */
+            padding: 0;
+        }
+
+        main :first-child {
+
+            /* margin-top: 10vh; */
+        }
+
+
+        nav {
+            margin: 0 auto;
+        }
+
+        nav ul {
+            display: flex;
+        }
+
+        nav li {
+            display: block;
+            margin: 0 15px;
+        }
+
+        #search {
+            width: 50px;
+            height: 50px;
+            background-image: url(svg/Buscador-01.svg);
+            background-size: 40%;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .fondo-verde {
+            background-color: #51c0b3
+        }
+
+        header.fondo-verde {
+            border-color: #56ccc1;
+        }
+
+        .fondo-verde #logo {
+            background-image: url(svg/logo-verde.svg);
+        }
+
+        .fondo-herramientas {
+            background-image: url(svg/fondo-herramientas.svg);
+            background-size: 100%;
+        }
+
+        main li {
+            list-style: none;
+        }
+
+        .opciones a {
+            padding: 10px 20px;
+            background: #1f5a64;
+            margin: 5px;
+            border-radius: 30px;
+            font-weight: bold;
+        }
+
+        .opciones {
+            display: flex;
+            width: 60%;
+            flex-wrap: wrap;
+        }
+
+        .identifica {
+            margin-top: 100px;
+            display: flex;
+            flex-direction: row-reverse;
+            color: #ef4748
+        }
+
+        .identifica a {
+            padding: 10px 20px;
+            background: #ef4748;
+            margin: 5px;
+            border-radius: 30px;
+            font-weight: bold;
+            color: white;
+        }
+    </style>
+</head>
+
+<body class="fondo-herramientas">
+    <header class="fondo-verde">
+        <div class=content>
+            <div id="logo"></div>
+            <nav>
+                <ul>
+                    <li>Inicio</li>
+                    <li>Historias</li>
+                    <li>Orientación</li>
+                    <li>Instancias</li>
+                    <li><a href="herramientas.html">Herramientas</a></li>
+                    <li>Materiales</li>
+                    <li>Directorio</li>
+                </ul>
+
+
+            </nav>
+            <div id="search"></div>
+        </div>
+
+    </header>
+
+    <main>
+        <h1>Herramientas</h1>
+        <p>Aquí podrás encontrar las herramientas necesarias para redactar quejas,
+            denuncias y amparos en contra de autoridades gubernamentales, funcionarios
+            públicos y la sociedad civil.
+        </p>
+        <p>Si ya sabes a qué instancia acudir, selecciona la herramienta necesaria.</p>
+
+        <div class="opciones">
+
+            <a href="arma_tu.html?instancia=CNDH">Queja ante la CNDH</a>
+
+
+            <a href="arma_tu.html?instancia=CONAPRED">Queja ante el CONAPRED</a>
+
+
+            <a href="arma_tu.html?instancia=SFP">Queja ante la SFP</a>
+
+            <a href="arma_tu.html?instancia=MP">Denuncia ante el MP</a>
+
+            <a href="arma_tu.html?instancia=AMPARO">Juicio de AMPARO</a>
+
+        </div>
+
+        <div class="identifica">
+
+            <img style="width: 200px; order:3" src="svg/cara2.svg" alt="">
+            <div style="order:2;width: 30%">
+                <p style="width: 100%">
+                    Si aún tienes dudas sobre cuál instancia es la correcta para tu caso, en seguida hay una herramienta
+                    que
+                    te
+                    ayudará a identificar qué instancia podría ser la más conveniente para ti.
+                </p>
+
+                <a href="identifica_tu_instancia.html">Identifica tu instancia</a>
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+
+</body>
+
+</html>

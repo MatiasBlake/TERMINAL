@@ -1,0 +1,664 @@
+<html>
+
+<head>
+
+    <script>
+
+        function next(curr) {
+            event.preventDefault()
+            location.hash = "#paso-" + (curr + 1)
+        }
+
+        function prev(curr) {
+            event.preventDefault()
+            location.hash = "#paso-" + (curr - 1)
+        }
+
+        function load() {
+
+            function upperCase(s) { return s.charAt(0).toUpperCase() + s.slice(1) }
+
+            document.querySelectorAll("input[type=text]").forEach(e => e.setAttribute("placeholder", upperCase(e.name)))
+
+            let inst = location.search.split('instancia=')[1]
+            switch (inst) {
+                case "CNDH":
+                    break
+                case "CONAPRED":
+                    break
+                case "SFP":
+                    break
+                case "MP":
+                    break
+                case "AMPARO":
+                    break
+                default:
+                    location.replace("herramientas.html")
+                    break
+            }
+
+            document.querySelector("h1").innerText = `Arma tu queja ante ${inst}`
+
+        }
+
+    </script>
+
+
+    <title></title>
+    <meta charset="UTF-8">
+    <link href="fonts/gandhi_sans_and_serif.zip" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+    <style>
+        [aria-hidden="true"] {
+            display: none !important;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-right: 100%;
+            flex-shrink: 0;
+            width: max-content;
+        }
+
+        input[type=text],
+        select,
+        textarea {
+            border: 0;
+            border-radius: 8px;
+            padding: 8px;
+            outline: none;
+            margin: 5px;
+            background-color: #66d9d1;
+            color: #ffffff;
+        }
+
+        select {
+            color: #51c0b3;
+        }
+
+        *::placeholder {
+            color: #51c0b3;
+        }
+
+
+        form div {
+            margin: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            width: 70%;
+        }
+
+        #regresar {
+            width: 30px;
+            height: 30px;
+            background-color: #4db8b0;
+            background-image: url(svg/regresar.svg);
+        }
+
+        .pasos {
+            background-repeat: no-repeat;
+            background-position: center;
+            padding: 0 80px;
+
+        }
+
+        section {
+            height: 80vh;
+            padding-top: 20vh;
+            margin-top: 0;
+        }
+
+
+
+
+        section img {
+            width: 30%;
+            word-wrap:
+        }
+
+        @font-face {
+            font-family: "GandhiSans";
+            src: url("fonts/TipografiaGandhi/GandhiSans-Regular.otf") format("opentype");
+        }
+
+        button {
+            background-color: #ef4748;
+            border: 0;
+            font: inherit;
+            font-weight: bold;
+            padding: 5px 10px;
+            color: #ffffff;
+            height: 30px;
+            border-radius: 20px;
+            cursor: pointer;
+            outline: none;
+            height: auto;
+            text-align: left;
+        }
+
+        main li {
+            list-style: none;
+            margin-bottom: 10px;
+        }
+
+        main ul {
+            margin: 0;
+        }
+
+        body {
+
+            margin: 0;
+            color: white;
+            font-family: 'GandhiSans';
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-position-y: -82px;
+            background-image: url("svg/fondo-queja-cndh.svg");
+            overflow: hidden;
+        }
+
+
+        main {
+            margin: 50px auto;
+            width: 80%;
+        }
+
+        header {
+            width: 100%;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e96d79;
+            background-color: #4db8b0;
+        }
+
+        header .content {
+
+            padding-top: 20px;
+            display: flex;
+            margin: 0 7%;
+        }
+
+
+        h1,
+        h2 {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 3em;
+        }
+
+        h2 {
+            font-size: 1.5em;
+
+        }
+
+        main p {
+            width: 50%;
+        }
+
+        #logo {
+            width: 50px;
+            height: 50px;
+            background-image: url(svg/Logo-01.svg)
+        }
+
+        .button {
+            height: 50px;
+            background-color: #4db8b0;
+            border-radius: 20px;
+            padding: 5px;
+            width: fit-content;
+            display: flex;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+        .back,
+        .next {
+            height: 40px;
+            background-repeat: no-repeat;
+            background-size: 70%;
+            background-position: center;
+            width: 40px;
+            background-image: url(svg/regresar.svg);
+        }
+
+        .next {
+            transform: scaleX(-1);
+        }
+
+
+        nav {
+            margin: 0 auto;
+        }
+
+        nav ul {
+            display: flex;
+        }
+
+        nav li {
+            display: block;
+            margin: 0 15px;
+        }
+
+        #search {
+            width: 50px;
+            height: 50px;
+            background-image: url(svg/Buscador-01.svg);
+            background-size: 40%;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .fondo-verde {
+            background-color: #51c0b3
+        }
+
+        header.fondo-verde {
+            border-color: #56ccc1;
+        }
+
+        .fondo-verde #logo {
+            background-image: url(svg/logo-verde.svg);
+        }
+
+        .fondo-blanco {
+            background-color: #ffffff;
+            color: #ef4748
+        }
+
+        header.fondo-blanco {
+            border-color: #ef4748;
+        }
+
+        .fondo-blanco #logo {
+            background-image: url(svg/Logo-01.svg);
+        }
+
+        .fondo-blanco button {
+            background-color: #ffffff;
+            color: #ef4748;
+        }
+
+        .fondo-blanco .pasos {
+            background-image: url(svg/mancha2.svg)
+        }
+
+        main section {
+            margin-bottom: 20px;
+        }
+
+        #paso-2 img {
+            flex-basis: 40%;
+        }
+
+        #paso-2 h2 {
+            color: #ef4748;
+        }
+
+
+        #paso-2 div {
+            background-image: url(svg/globo-01.svg);
+            background-repeat: no-repeat;
+            background-size: 100%;
+            width: 45%;
+            padding: 80px;
+            font-weight: bold;
+        }
+
+        .texto-oscuro {
+            color: #0b313f;
+        }
+
+        .volveraherramientas {
+            text-decoration: none;
+            color: inherit;
+            font-weight: bold;
+            background: #4db8b0;
+            padding: 10px;
+            border-radius: 50px;
+            margin-left: 34%;
+            vertical-align: top;
+            color: #ffffff
+        }
+
+        #paso-5 textarea::placeholder {
+            color: #ef4748
+        }
+
+        #paso-7 div p {
+            margin-right: 0;
+            width: 100%;
+        }
+    </style>
+
+</head>
+
+<body class="fondo-verde" onload=load()>
+
+    <header class="fondo-verde">
+        <div class=content>
+            <div id="logo"></div>
+            <nav>
+                <ul>
+                    <li>Inicio</li>
+                    <li>Historias</li>
+                    <li>Orientación</li>
+                    <li>Instancias</li>
+                    <li>Herramientas</li>
+                    <li>Materiales</li>
+                    <li>Directorio</li>
+                </ul>
+
+
+            </nav>
+            <div id="search"></div>
+        </div>
+
+    </header>
+    <main>
+        <div aria-live="assertive" aria-atomic="true" class="pasos">
+
+            <section id="paso-1">
+                <h2>Queja ante la CNDH</h2>
+                <form action="">
+                    <div style="width: min-content;float:left">
+                        <label>¿Cómo te llamas?</label>
+                        <input name="nombre" type="text">
+                    </div>
+                    <div style="width: min-content;float:left">
+                        <label>¿Cuál es tu género?</label>
+                        <input name="género" type="text">
+                    </div>
+                    <div style="width: min-content;float:left">
+                        <label>¿Tienes alguna discapacidad?</label>
+                        <input name="discapacidad" type="text">
+                    </div>
+                    <div>
+                        <label>¿Dónde vives?</label>
+                        <input name="calle" type="text">
+                        <input name="ext" type="text">
+                        <input name="int" type="text">
+                        <input name="colonia" type="text">
+                        <input name="alcaldia" type="text">
+                        <input name="ciudad" type="text">
+                        <input name="cp" type="text">
+                    </div>
+                    <div>
+                        <label>¿Cómo podemos contactarte?</label>
+                        <input name="telefono" type="text">
+                        <input name="correo" type="text">
+                    </div>
+
+                    <button onclick=next(1) class="next"></button>
+
+
+                </form>
+            </section>
+
+            <section id="paso-2">
+                <div class="texto-oscuro">
+                    <h2>¿Tus datos son los correctos?</h2>
+
+                    <p>Ismael Sánchez Becerra</p>
+                    <p>General Marcial Lazcano 55, San Ángel Inn, Álvaro Obregón, CDMX, 01060</p>
+                    <p>5566778899 <br> ismael@gmail.com</p>
+
+
+                    <button onclick=next(2) class="next"></button>
+                    <button onclick=prev(2) class="back"></button>
+                    <a class="volveraherramientas" href="herramientas.html"
+                        style="                 background: #ef4746;                 margin: 10px;                 width: 200px;                 position: relative;top:10px;">Volver
+                        a herramientas <img src="svg/volveraherramientas.svg"
+                            style="height:20px;width: 20px;position: relative;top: -20px;"> </a>
+
+                </div>
+
+
+            </section>
+
+            <section id="paso-3" class="texto-oscuro">
+                <form action="">
+                    <div>
+                        <label>¿Esto te pasó a ti o le pasó a alguien más?</label>
+                        <select name="agraviado" id="agraviado">
+                            <option value="0">La persona agraviada soy yo</option>
+                            <option value="1">La persona agraviada es alguien más</option>
+                        </select>
+                    </div>
+                    <!-- <div>
+                        <label>¿Cuál es el nombre del agraviado?</label>
+                        <input name="nombre" type="text">
+                    </div> -->
+                    <div>
+                        <label>¿Quién violentó tus derechos?</label>
+                        <input name="autoridad" type="text">
+                        <button style="
+                        background-color: #4db8b0;
+                        height: 31px;
+                        border-radius: 9px;
+                        margin-top: 4px;
+                        margin-right: 50%;
+                    ">?</button>
+                        <input name="funcionario" type="text"> <span
+                            style="margin-top: 9px;color: #66d9d1;font-weight: bold;">(Si es que hay)</span>
+                    </div>
+
+                    <button onclick=next(3) class="next"></button>
+                    <button onclick=prev(3) class="back"></button>
+                    <a class="volveraherramientas" href="herramientas.html"
+                        style="                 background: #ef4746;                 margin: 10px;                 width: 200px;                 position: relative;top:10px;">Volver
+                        a herramientas <img src="svg/volveraherramientas.svg"
+                            style="height:20px;width: 20px;position: relative;top: -20px;"> </a>
+                </form>
+
+            </section>
+
+            <section id="paso-4">
+                <div style="
+                    ">
+                    <label>¿Dónde ocurrieron los hechos?</label>
+                    <input name="calle" type="text" placeholder="Calle">
+                    <input name="ext" type="text" placeholder="Ext">
+                    <input name="int" type="text" placeholder="Int" style="
+                        margin-right: 20%;
+                    ">
+                    <input name="colonia" type="text" placeholder="Colonia">
+                    <input name="alcaldia" type="text" placeholder="Alcaldia">
+                    <input name="ciudad" type="text" placeholder="Ciudad" style="
+                        margin-right: 20%;
+                    ">
+                    <input name="CP" type="text" placeholder="Cp" style="
+                        /* margin-left: 100%; */
+                    ">
+                    <textarea name="referencias" id="" cols="70" rows="10" style="
+                        margin-right: 100%;
+                        font-family: inherit;
+                        font-size: inherit;
+                    " placeholder="Referencias (entre calles, parques, referencias visuales, etc)."></textarea>
+                </div>
+                <div>
+                    <label>¿Cuándo ocurrieron los hechos?</label>
+                    <input name="fecha" type="text">
+                    <input name="hora" type="text">
+                </div>
+
+
+                <button onclick=next(4) class="next"></button>
+                <button onclick=prev(4) class="back"></button>
+                <a class="volveraherramientas" href="herramientas.html"
+                    style="                 background: #ef4746;                 margin: 10px;                 width: 200px;                 position: relative;top:10px;">Volver
+                    a herramientas <img src="svg/volveraherramientas.svg"
+                        style="height:20px;width: 20px;position: relative;top: -15px;"> </a>
+
+
+
+            </section>
+
+            <section id="paso-5" class="texto-oscuro">
+                <form action="">
+
+                    <div>
+                        <label style="
+            color: #226069;
+        ">Cuéntanos lo que pasó</label>
+                        <div style="
+            display: flex;
+            width: 100%;
+        ">
+                            <div class="video" style="
+            background: url(svg/video.svg);
+            height: 420px;
+            width: 267px;
+            background-repeat: no-repeat;
+            margin: 0 0px;
+        "></div>
+                            <textarea name="hechos" id="" cols="45" rows="9" style="
+            background: #ffffff;
+            border: 2px solid #e34756;
+            color: #ef4748;
+            font-family: inherit;
+            resize: none;
+            height: 420px;
+            margin: 0;
+        " placeholder="Relata los hechos que sucedieron e incluye todos los datos necesarios para identificar a la persona responsable o personas responsables."></textarea>
+                        </div>
+
+                    </div>
+                </form>
+
+
+                <button onclick=next(5) class="next"></button>
+                <button onclick=prev(5) class="back"></button>
+                <a class="volveraherramientas" href="herramientas.html"
+                    style="                 background: #ef4746;                 margin: 10px;                 width: 200px;                 position: relative;top:10px;">Volver
+                    a herramientas <img src="svg/volveraherramientas.svg"
+                        style="height:20px;width: 20px;position: relative;top: -15px;"> </a>
+
+            </section>
+
+            <section id="paso-6">
+                <div style="
+                    background: url(svg/globo-02.svg);
+                    background-repeat: no-repeat;
+                    background-size: 100%;
+                    background-position-y: center;
+                    width: 30%;
+                    margin: auto;
+                    padding: 80px;
+                ">
+                    <label style="color:#4db8b0">
+                        ¿Tienes algún video, foto, grabación o <br>
+                        documento que pruebe lo que contaste?
+                    </label>
+
+                    <button class="upload" style="
+                    background-image: url(svg/upload.svg);
+                    background-repeat: no-repeat;
+                    background-size: 100%;
+                    height: 60px;
+                    width: 60px;
+                    background-color: transparent;
+                    margin-top: 10px;
+                "></button>
+
+                </div>
+                <div style="
+                width: 350px;
+                margin: auto;
+            ">
+
+                    <button onclick="next(6)" class="next"></button>
+                    <button onclick="prev(6)" class="back"></button>
+                    <a class="volveraherramientas" href="herramientas.html"
+                        style="                 background: #ef4746;                 margin: 10px;                 width: 200px;                 position: relative;top:10px;">Volver
+                        a herramientas <img src="svg/volveraherramientas.svg"
+                            style="height:20px;width: 20px;position: relative;top: -15px;"> </a>
+                </div>
+
+
+            </section>
+
+
+            <section id="paso-7" style="padding-top: 10vh;margin-top: 40vh;">
+                <h2>¡No olvides firmar el documento!</h2>
+                <p>Todo está casi listo, pero recuerda, <strong>es muy importante tu firma</strong>.</p>
+                <p><strong>Fírmalo o estampa tu huella digital</strong> una vez impreso el documento. <strong>Lo puedes
+                        escanear y mandar por correo electrónico o enviarlo por correo postal</strong> a
+                    la dirección de la CNDH.</p>
+                <p>En caso de que no mandes el documento por correo, <strong>deberás ir en los próximos
+                        tres días a las oficinas de la CNDH a presentarlo</strong>.</p>
+
+                <div style="
+                        color: #ef4746;
+                        font-weight: bold;
+                        background: white;
+                        padding: 20px;
+                        border: 2px solid #ef4746;
+                        border-radius: 15px;
+                        margin: 20px 0;
+                        font-size: small;
+                        width: 450px;
+                    ">
+                    <img src="svg/logo-cndh.svg" alt="logo de la CNDH" style="
+                    width: 80px;
+                    float: left;
+                    margin-right: 20px;
+                ">
+                    <p>correo@cndh.org.mx</p>
+                    <p>(55) 56 81 81 25</p>
+                    <p>Periférico Sur número 3469, Colonia San Jerónimo Lídice,<br>
+                        Magdalena Contreras, C.P. 10200 en la Ciudad de México.</p>
+                </div>
+
+                <a href="iphone_user_guide.pdf" download="iPhone User's Guide.PDF"><button class="download" style="
+                    background-image: url(svg/download.svg);
+                    background-repeat: no-repeat;
+                    background-size: contain;
+                    background-position-x: 110px;
+                    height: 40px;
+                    width: 150px;
+                    color: #ef4746;
+                    background-color: transparent;
+                    margin-top: 10px;
+                    border-radius: 0;
+                    margin: 10px;
+                ">
+                        Descarga tu<br> documento
+                    </button></a>
+                <button onclick=prev(7) class="back" style="position: relative;
+                top: 15px;"></button>
+                <a class="volveraherramientas" href="herramientas.html" style="
+                background: #ef4746;
+                margin: 10px;
+                width: 200px;
+                position: relative;
+                top: 30px;
+            ">Volver a herramientas <img src="svg/volveraherramientas.svg"
+                        style="height:20px;width: 20px;position: relative;top: -20px;"> </a>
+                <a href="index.html" style="
+                /* background: #ef4746; */
+                margin: 10px;
+                /* width: 200px; */
+                /* position: relative; */
+                /* top: 20px; */
+            "><img src="svg/inicio.svg" alt="inicio" style="
+                height: 40px;
+                width: 40px;
+                position: relative;
+                top: 20px;
+            "></a>
+
+
+
+            </section>
+
+
+
+        </div>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,562 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <script>
+
+        function get_ordered_params() {
+            let param_string = location.search.substring(1),
+                param_kv = param_string.split("&").map(e => e.split("=")),
+                params = Object.fromEntries(param_kv)
+            return [params.paso, params.acusado, params.deseo].filter(e => e !== undefined).map(e => parseInt(e))
+
+        }
+
+        function set_style_classes() {
+            let paso = get_ordered_params()[0] || 1
+
+            let mapa_paso_a_clase = ["fondo-verde", "fondo-blanco", "fondo-verde cndh"]
+
+            document.body.setAttribute("class", mapa_paso_a_clase[paso - 1])
+            document.querySelector("header").setAttribute("class", mapa_paso_a_clase[paso - 1])
+
+        }
+
+        function next_step(...args) {
+            let keys = ["paso", "acusado", "deseo"]
+            let kv = args.map((e, i) => `${keys[i]}=${e}`)
+            let url_params = kv.join("&")
+            let url = "identifica_tu_instancia.html?" + url_params
+            window.location.href = url
+        }
+
+        function identifica(paso = 1, acusado = null, deseo = null) {
+
+            posibles_acusados = ["Una Institución Gubernamental",
+                "Una Institución Privada",
+                //"Una Institución Educativa Pública",
+                //"Una Institución Educativa Privada",
+                "Una Institución Educativa",/////
+                "Un Funcionario Público",
+                "Otra persona"]
+
+            posibles_deseos = ["Que se promueva la igualdad y la no discriminación con \
+                    talleres obligatorios, cursos y otras medidas necesarias,\
+                    además de que exista una compensación por el daño, una\
+                    amonestación, una disculpa y la garantía de que no suceda\
+                    otra vez.",
+                "Que se haga una recomendación para reparar el daño, que\
+                    haya una sanción económica y que se agilizen los trámites\
+                    interrumpidos.",
+                "Que se vayan a la cárcel.",
+                "Que se amoneste, que hay sanción económica, que haya\
+                    una suspensión o que despidan al funcionario públicas.",
+                "Que me dejen inscribirme a una escuela en donde me\
+                    negaron mi inscripción, a pesar de mi discapacidad."
+            ]
+
+            mapa_acusados_a_desc = [
+                "(como el IMSS, la CFE o cualquier institución que pertenezca o tenga comisiones del gobierno)",
+                "(cualquier organización que no pertenezca a ni tenga comisiones del gobierno)",
+                "(desde una universidad hasta un preescolar, sea pública o privado)",
+                "(como una maestra de una escuela pública, un policía o cualquier persona con un cargo o comisión \
+                del gobierno)",
+                "(como tu vecino o tu compañero de trabajo)"
+            ]
+
+            mapa_acusados_a_deseos = [
+                [0, 1],
+                [0, 2],
+                [0, 1, 4],
+                [0, 2, 4],
+                [2, 3], [2]
+            ]
+            // (qué opciones correspoden a qué institución)
+
+            mapa_deseos_a_instancias = ["CONAPRED", "CNDH", "MP", "SFP", "AMPARO"]
+            // (qué instancias correspoden a qué opción)
+            let ul, button
+            switch (paso) {
+                case 1: //Quién
+
+                    ul = document.querySelector("section#paso-1 ul")
+
+                    posibles_acusados.forEach((ac, i) => {
+                        let li = document.createElement("li")
+                        let button = document.createElement("button")
+                        let p = document.createElement("p")
+                        p.innerText = mapa_acusados_a_desc[i]
+                        p.setAttribute("class", "desc")
+                        button.addEventListener("click", () => next_step(2, i))
+                        button.innerText = ac
+                        li.appendChild(button)
+                        li.appendChild(p)
+                        ul.appendChild(li)
+                    })
+
+                    break
+                case 2: // deseo
+                    if (acusado == null) next_step() // error, vuelve a empezar
+
+                    ul = document.querySelector("section#paso-2 ul")
+                    opciones = mapa_acusados_a_deseos[acusado]
+                    opciones.forEach((op, i) => {
+                        let li = document.createElement("li")
+                        let button = document.createElement("button")
+                        button.addEventListener("click", () => next_step(3, acusado, op))
+                        button.innerText = posibles_deseos[op]
+                        li.appendChild(button)
+                        ul.appendChild(li)
+                    })
+
+
+                    break
+                case 3: // resultado
+                    if (acusado == null || deseo == null) next_step() // error, vuelve a empezar
+                    let instancia = mapa_deseos_a_instancias[deseo]
+                    let div = document.querySelector(`div#${instancia}`)
+                    document.querySelectorAll("#paso-3 div").forEach(e => e.setAttribute("aria-hidden", "true"))
+                    div.setAttribute("aria-hidden", "false")
+                    let a = document.querySelector(`section#paso-${paso}`).querySelector("a")
+                    a.setAttribute("href", `arma_tu.html?instancia=${instancia}`)
+
+                    let text
+
+                    if (instancia == "CONAPRED" || instancia == "CNDH") {
+                        text = "Arma tu queja"
+                    } else if (instancia == "AMPARO") {
+                        text = "Arma tu AMPARO"
+                    } else {
+                        text = "Arma tu denuncia"
+                    }
+
+                    a.innerText = text
+
+
+                    break
+                default:
+                    identifica()
+                    break
+            }
+            document.querySelectorAll("section").forEach(e => e.setAttribute("aria-hidden", "true"))
+            document.querySelector(`section#paso-${paso}`).setAttribute("aria-hidden", "false")
+        }
+
+    </script>
+    <style>
+        [aria-hidden="true"] {
+            display: none !important;
+        }
+
+
+        .desc {
+            width: 300px;
+            position: relative;
+            top: 10px;
+            margin: 5px;
+            color: red;
+            font-size: small;
+            display: inline-block;
+        }
+
+        #paso-1 li:last-of-type p {
+            top: 0;
+        }
+
+        #regresar {
+            width: 30px;
+            height: 30px;
+            background-color: #4db8b0;
+            background-image: url(svg/regresar.svg);
+        }
+
+        .pasos {
+            background-image: url(svg/mancha1.svg);
+            background-repeat: no-repeat;
+            background-position: center;
+            padding: 80px;
+
+        }
+
+        section h2 {
+            color: #ef4748;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: fit-content;
+            padding: 40px;
+            padding-top: 20px;
+            margin-left: -50px;
+
+        }
+
+        #paso-1 h2 {
+            background-image: url(svg/globo5.svg);
+        }
+
+        #paso-2 h2 {
+            background-image: url(svg/globo4.svg);
+        }
+
+        section {
+            display: flex;
+        }
+
+        section img {
+            width: 30%;
+            word-wrap:
+        }
+
+        @font-face {
+            font-family: "GandhiSans";
+            src: url("fonts/TipografiaGandhi/GandhiSans-Regular.otf") format("opentype");
+        }
+
+        button {
+            background-color: #ef4748;
+            border: 0;
+            font: inherit;
+            font-weight: bold;
+            padding: 5px 10px;
+            color: #ffffff;
+            height: 30px;
+            border-radius: 20px;
+            cursor: pointer;
+            outline: none;
+            height: auto;
+            text-align: left;
+        }
+
+        main li {
+            list-style: none;
+            margin-bottom: 10px;
+        }
+
+        main ul {
+            margin: 0;
+        }
+
+        body {
+
+            margin: 0;
+            color: white;
+            font-family: 'GandhiSans';
+            background-size: 100%;
+            background-repeat: no-repeat;
+            background-position-y: 82px;
+        }
+
+
+        main {
+            margin: 50px auto;
+            width: 80%;
+        }
+
+        header {
+            width: 100%;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e96d79;
+            background-color: #4db8b0;
+        }
+
+        header .content {
+
+            padding-top: 20px;
+            display: flex;
+            margin: 0 7%;
+        }
+
+
+        h1,
+        h2 {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 3em;
+        }
+
+        h2 {
+            font-size: 1.5em;
+
+        }
+
+        main p {
+            width: 50%;
+        }
+
+        #logo {
+            width: 50px;
+            height: 50px;
+            background-image: url(svg/Logo-01.svg)
+        }
+
+        .button {
+            height: 50px;
+            background-color: #4db8b0;
+            border-radius: 20px;
+            padding: 5px;
+            width: fit-content;
+            display: flex;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+
+
+        nav {
+            margin: 0 auto;
+        }
+
+        nav ul {
+            display: flex;
+        }
+
+        nav li {
+            display: block;
+            margin: 0 15px;
+        }
+
+        #search {
+            width: 50px;
+            height: 50px;
+            background-image: url(svg/Buscador-01.svg);
+            background-size: 40%;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        .fondo-verde {
+            background-color: #51c0b3
+        }
+
+        header.fondo-verde {
+            border-color: #56ccc1;
+        }
+
+        .fondo-verde #logo {
+            background-image: url(svg/logo-verde.svg);
+        }
+
+        .fondo-blanco {
+            background-color: #ffffff;
+            color: #ef4748
+        }
+
+        header.fondo-blanco {
+            border-color: #ef4748;
+        }
+
+        .fondo-blanco #logo {
+            background-image: url(svg/Logo-01.svg);
+        }
+
+        .fondo-blanco button {
+            background-color: #ffffff;
+            color: #ef4748;
+        }
+
+        .fondo-blanco .pasos {
+            background-image: url(svg/mancha2.svg)
+        }
+
+        body.cndh {
+            background-image: url(svg/fondo-cndh.svg);
+            background-color: #ffffff;
+            background-position-y: 0;
+
+        }
+
+        .cndh .pasos {
+            background-image: unset;
+        }
+
+        main section {
+            margin-bottom: 20px;
+        }
+
+        #paso-2 img {
+            flex-basis: 40%;
+        }
+
+        #paso-2 h2 {
+            position: relative;
+            left: 200px;
+            width: fit-content;
+        }
+
+        #paso-2 div {
+            margin-left: 50px;
+            flex-basis: 60%;
+        }
+
+        #paso-3 {
+            display: block;
+        }
+
+        #paso-3 a {
+            padding: 10px 20px;
+            background: #ef4748;
+            margin: 5px;
+            border-radius: 30px;
+            font-weight: bold;
+            color: white;
+            text-decoration: none
+        }
+
+
+
+        .volveraherramientas {
+            text-decoration: none;
+            color: inherit;
+            font-weight: bold;
+            background: #4db8b0;
+            padding: 10px;
+            border-radius: 50px;
+            margin-left: 34%;
+            vertical-align: top;
+            color: #ffffff
+        }
+
+        .cndh .volveraherramientas {
+            margin: 0;
+            position: relative;
+            top: 10px;
+        }
+    </style>
+</head>
+
+
+
+<body class="fondo-verde" onload="identifica(...get_ordered_params());set_style_classes()">
+    <header class="fondo-verde">
+        <div class=content>
+            <div id="logo"></div>
+            <nav>
+                <ul>
+                    <li>Inicio</li>
+                    <li>Historias</li>
+                    <li>Orientación</li>
+                    <li>Instancias</li>
+                    <li>Herramientas</li>
+                    <li>Materiales</li>
+                    <li>Directorio</li>
+                </ul>
+
+
+            </nav>
+            <div id="search"></div>
+        </div>
+
+    </header>
+    <main>
+        <div aria-live="assertive" aria-atomic="true" class="pasos">
+            <section id="paso-1">
+                <img src="svg/cara1.svg" alt="" />
+
+                <div>
+                    <h2>¿Quién vulneró tus derechos?</h2>
+
+
+
+                    <ul>
+
+                    </ul>
+                </div>
+
+
+            </section>
+
+            <section id="paso-2">
+                <div>
+                    <h2>¿Qué te gustaría lograr?</h2>
+
+
+
+                    <ul>
+
+                    </ul>
+                </div>
+                <img src="svg/cara3.svg" alt="" style="order:2" />
+
+
+            </section>
+
+            <section id="paso-3">
+                <div id="CONAPRED">
+                    <p>Arma tu queja ante el CONAPRED</p>
+                    <p>Puede ser que para tu caso, la instancia local de la CDMX sea en donde tengas que presentar tu
+                        queja.
+                        Pero te recomendamos siempre insistir en que te ayude la instancia nacional.
+                    </p>
+                    <p>El CONAPRED puede actuar tanto contra instacias gubernamentales, como contra insancias
+                        privadas y trata todo tipo de discriminación, pero sobre todo trata asuntos internos como
+                        la discriminación laboral entre colegas o la discriminación de maestros a alumnos en
+                        instituciones
+                        educativas.
+                    </p>
+                </div>
+
+                <div id="CNDH">
+                    <h1>Queja ante la CNDH</h1>
+                    <p>Puede ser que para tu caso, la instancia local de la CDMX sea en donde tengas que presentar tu
+                        queja.
+                        Pero te recomendamos siempre insistir en que te ayude la instancia nacional.
+                    </p>
+                    <p>
+                        La CNDH sólo actúa contra instancias gubernamentales y trata todo tipo de discriminación,
+                        pero se centra en aquella discriminación que esté atendiendo diectamente en contra de
+                        derechos humanos básicos, así como los ajustes razonables para personas con discapacidad o el
+                        derecho a
+                        la educación.
+                    </p>
+                </div>
+
+                <div id="MP">
+                    <p>Presenta tu denuncia ante el MP.</p>
+
+                    <p>
+                        El MP es el único lugar al que puedes acuidir para denunciar un delito y las consecuencias
+                        son penales. Existen muchos delitos, pero entre los más comunes está el robo, el acoso
+                        sexual, el maltrato familiar
+                    </p>
+                </div>
+
+                <div id="SFP">
+                    <p>Presenta tu denuncia ante la SFP.</p>
+                    <p>
+                        La Secretaría de la Función Pública es la instancia que se encarga de revisar y regular el
+                        comportamiento de los funcionarios públicos. La SFP te puede ayudar si un funcionario público no
+                        está
+                        cumpliendo sus labores debidamente, si está haciendo abuso de su poder
+                        para su beneficio personal o si está cometiendo algún acto discriminatorio.
+                    </p>
+                </div>
+
+                <div id="AMPARO">
+                    <p>
+                        El AMPARO es una herramienta que defiende tus derechos constitucionales en contra del
+                        abuso de autoridades y puede ser útil para muchas situaciones. Pero aquí diseñamos una
+                        herramienta que te permitirá generar tu AMPARO para defenderte de instituciones educativas en
+                        caso
+                        de
+                        que no te hayan dejado inscribirte a una escuela por tu discapacidad.
+                    </p>
+
+                    <p>Este amparo lo puedes presentar tú o algún familiar tuyo.</p>
+                </div>
+
+                <a></a>
+
+
+            </section>
+
+
+            <a class="volveraherramientas" href="herramientas.html">Volver a herramientas <img
+                    src=svg/volveraherramientas.svg style="height:20px;"> </a>
+
+
+        </div>
+    </main>
+</body>
+
+</html>
