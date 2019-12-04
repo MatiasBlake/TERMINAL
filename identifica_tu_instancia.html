@@ -2,6 +2,7 @@
 
 <head>
     <meta charset="utf-8">
+    <title>Identifica tu instancia</title>
     <script>
 
         function get_ordered_params() {
@@ -150,7 +151,7 @@
 
 
         .desc {
-            width: 300px;
+            width: 330px;
             position: relative;
             top: 10px;
             margin: 5px;
@@ -161,6 +162,10 @@
 
         #paso-1 li:last-of-type p {
             top: 0;
+        }
+
+        #paso-1 li:last-child {
+            margin-top: 19px;
         }
 
         #regresar {
@@ -228,7 +233,7 @@
 
         main li {
             list-style: none;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
         }
 
         main ul {
@@ -350,6 +355,10 @@
             background-image: url(svg/Logo-01.svg);
         }
 
+        .fondo-blanco #search {
+            background-image: url(svg/lupa1.svg);
+        }
+
         .fondo-blanco button {
             background-color: #ffffff;
             color: #ef4748;
@@ -376,11 +385,17 @@
 
         #paso-2 img {
             flex-basis: 40%;
+            margin-left: -70px;
+        }
+
+        #paso-2 button {
+            font-weight: normal !important;
         }
 
         #paso-2 h2 {
             position: relative;
-            left: 200px;
+            left: 300px;
+            top: -25px;
             width: fit-content;
         }
 
@@ -393,10 +408,13 @@
             display: block;
         }
 
+        #paso-3 div {
+            margin-bottom: 80px;
+        }
+
         #paso-3 a {
             padding: 10px 20px;
             background: #ef4748;
-            margin: 5px;
             border-radius: 30px;
             font-weight: bold;
             color: white;
@@ -421,6 +439,7 @@
             margin: 0;
             position: relative;
             top: 10px;
+            background: #409c95;
         }
     </style>
 </head>
@@ -437,7 +456,7 @@
                     <li>Historias</li>
                     <li>Orientación</li>
                     <li>Instancias</li>
-                    <li>Herramientas</li>
+                    <li style="font-weight:bold">Herramientas</li>
                     <li>Materiales</li>
                     <li>Directorio</li>
                 </ul>

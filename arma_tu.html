@@ -4,6 +4,46 @@
 
     <script>
 
+        info = ["Ismael Sánchez Becerra", "Hombre", "Discapacidad Visual", "General Marcial Lazcano", "55", "San Ángel Inn", "Álvaro Obregón", "CDMX", "01060", "5566778899", "ismael@gmail.com", "IMSS", "Jaime López Andrade", "Av Toluca", "160", "Olivar de los Padres", "Álvaro Obregón", "CDMX", "01780", "11/06/2018", "17:00", "Soy derechoabiente del IMSS y fui a pedir una consulta, pues me sentía enfermo.Llegando ahí, le pregunté al policía que a dónde me dirigía, pues no habían guías podotáctiles. Preguntando, logré hablar con una señorita que me dio mi turno y me dijo que esperara sentado. Esperé más de una hora sentado hasta que llamaron mi nombre, por lo que me paré y buscando ayuda, el joven Jaime de pronto me agarró del hombro y me jaló agresivamente.Me frené y le dije que qué le pasaba, a lo que me respondió que ya era mi turno y que me vio muy lento.Me siguió jalando y comencé a caminar, intentando zafarme mientras le reclamaba que no me tratara así. Entonces fue, cuando no cesaba su comportamiento, cuando le pedí su nombre y se rehusó a dármelo.En ese momento llegamos al consultorio y me dejó botado. En el consultorio le conté al doctor lo que me acababa de pasar y con su ayuda conseguí el nombre del joven Jaime."].reverse()
+
+        function fill() {
+            document.querySelectorAll("input[type=text]").forEach(function (e) {
+                e.addEventListener("click", fill_next)
+            })
+            document.querySelectorAll("textarea").forEach(function (e) {
+                e.addEventListener("click", fill_next)
+            })
+        }
+
+        function fill_next(ev) {
+            let el = ev.target;
+            let v = info.pop()
+
+            fill_letters(el, v)
+        }
+
+        function fill_letters(el, v) {
+            function add_letter(l) {
+                el.value += l
+            }
+            let ls = v.split("")
+            ls.forEach(function (l, i) {
+                f = () => add_letter(l)
+                setTimeout(f, 150 * i)
+            })
+
+        }
+
+
+
+
+
+    </script>
+
+
+    <script>
+
+
         function next(curr) {
             event.preventDefault()
             location.hash = "#paso-" + (curr + 1)
@@ -37,20 +77,24 @@
                     break
             }
 
-            document.querySelector("h1").innerText = `Arma tu queja ante ${inst}`
+            document.querySelector("h2").innerText = `Arma tu queja ante ${inst}`
 
         }
 
     </script>
 
 
-    <title></title>
+    <title>Arma tu queja</title>
     <meta charset="UTF-8">
     <link href="fonts/gandhi_sans_and_serif.zip" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
     <style>
         [aria-hidden="true"] {
             display: none !important;
+        }
+
+        html {
+            scroll-behavior: smooth
         }
 
         label {
@@ -70,7 +114,16 @@
             outline: none;
             margin: 5px;
             background-color: #66d9d1;
-            color: #ffffff;
+            color: #0b313f;
+            font-family: inherit;
+            resize: none;
+
+        }
+
+        #paso-4 input[type=text],
+        select,
+        textarea {
+            background: #66d9d147
         }
 
         select {
@@ -78,7 +131,7 @@
         }
 
         *::placeholder {
-            color: #51c0b3;
+            color: #0b313f9d;
         }
 
 
@@ -223,6 +276,7 @@
             background-position: center;
             width: 40px;
             background-image: url(svg/regresar.svg);
+            margin: 0 10px;
         }
 
         .next {
@@ -299,12 +353,12 @@
         }
 
 
-        #paso-2 div {
+        #paso-2 div.globo {
             background-image: url(svg/globo-01.svg);
             background-repeat: no-repeat;
             background-size: 100%;
             width: 45%;
-            padding: 80px;
+            padding: 65px 80px;
             font-weight: bold;
         }
 
@@ -314,29 +368,63 @@
 
         .volveraherramientas {
             text-decoration: none;
-            color: inherit;
+            display: inline;
             font-weight: bold;
-            background: #4db8b0;
+            background: #ef4746;
+            background-image: url(svg/volveraherramientas.svg);
+            background-size: 20px;
+            background-position: 95% 7.5px;
+            background-repeat: no-repeat;
             padding: 10px;
+            padding-right: 35px;
             border-radius: 50px;
-            margin-left: 34%;
-            vertical-align: top;
-            color: #ffffff
+            margin: 0 10px;
+            color: #ffffff;
         }
 
         #paso-5 textarea::placeholder {
             color: #ef4748
         }
 
+        #paso-5 {
+            height: 90vh;
+            padding-top: 10vh;
+        }
+
         #paso-7 div p {
             margin-right: 0;
             width: 100%;
+        }
+
+        #paso-1 {
+            height: 95vh;
+            padding-top: 5vh;
+        }
+
+        .controles {
+            margin-top: 30px;
+            display: flex;
+        }
+
+        #paso-3 label {
+            font-size: larger;
+        }
+
+        #paso-3 input,
+        #paso-3 select {
+            color: #044963;
+            background: #b4edea;
+            width: 50%;
+        }
+
+        #paso-3 input::placeholder {
+            color: #044963c7;
         }
     </style>
 
 </head>
 
-<body class="fondo-verde" onload=load()>
+<body class="fondo-verde" onload=load();fill()>
 
     <header class="fondo-verde">
         <div class=content>
@@ -362,7 +450,7 @@
         <div aria-live="assertive" aria-atomic="true" class="pasos">
 
             <section id="paso-1">
-                <h2>Queja ante la CNDH</h2>
+                <h2 style="margin-bottom: 50px;">Queja ante la CNDH</h2>
                 <form action="">
                     <div style="width: min-content;float:left">
                         <label>¿Cómo te llamas?</label>
@@ -384,7 +472,7 @@
                         <input name="colonia" type="text">
                         <input name="alcaldia" type="text">
                         <input name="ciudad" type="text">
-                        <input name="cp" type="text">
+                        <input name="CP" type="text">
                     </div>
                     <div>
                         <label>¿Cómo podemos contactarte?</label>
@@ -392,27 +480,34 @@
                         <input name="correo" type="text">
                     </div>
 
-                    <button onclick=next(1) class="next"></button>
+                    <div class="controles">
+                        <button onclick=next(1) class="next"></button>
+                        <a class="volveraherramientas" href="herramientas.html">
+                            Volver a herramientas
+                        </a>
+                    </div>
+
 
 
                 </form>
             </section>
 
             <section id="paso-2">
-                <div class="texto-oscuro">
+                <div class="globo texto-oscuro">
                     <h2>¿Tus datos son los correctos?</h2>
 
                     <p>Ismael Sánchez Becerra</p>
                     <p>General Marcial Lazcano 55, San Ángel Inn, Álvaro Obregón, CDMX, 01060</p>
                     <p>5566778899 <br> ismael@gmail.com</p>
 
+                    <div class="controles">
+                        <button onclick=next(2) class="next"></button>
+                        <button onclick=prev(2) class="back"></button>
+                        <a class="volveraherramientas" href="herramientas.html">
+                            Volver a herramientas
+                        </a>
+                    </div>
 
-                    <button onclick=next(2) class="next"></button>
-                    <button onclick=prev(2) class="back"></button>
-                    <a class="volveraherramientas" href="herramientas.html"
-                        style="                 background: #ef4746;                 margin: 10px;                 width: 200px;                 position: relative;top:10px;">Volver
-                        a herramientas <img src="svg/volveraherramientas.svg"
-                            style="height:20px;width: 20px;position: relative;top: -20px;"> </a>
 
                 </div>
 
@@ -434,24 +529,25 @@
                     </div> -->
                     <div>
                         <label>¿Quién violentó tus derechos?</label>
-                        <input name="autoridad" type="text">
+                        <input name="autoridad responsable" type="text">
                         <button style="
                         background-color: #4db8b0;
                         height: 31px;
-                        border-radius: 9px;
-                        margin-top: 4px;
-                        margin-right: 50%;
+                        border-radius: 6px;
+                        margin-top: 5px;
                     ">?</button>
-                        <input name="funcionario" type="text"> <span
+                        <input name="nombre completo del funcionario" type="text"> <span
                             style="margin-top: 9px;color: #66d9d1;font-weight: bold;">(Si es que hay)</span>
                     </div>
 
-                    <button onclick=next(3) class="next"></button>
-                    <button onclick=prev(3) class="back"></button>
-                    <a class="volveraherramientas" href="herramientas.html"
-                        style="                 background: #ef4746;                 margin: 10px;                 width: 200px;                 position: relative;top:10px;">Volver
-                        a herramientas <img src="svg/volveraherramientas.svg"
-                            style="height:20px;width: 20px;position: relative;top: -20px;"> </a>
+                    <div class="controles">
+                        <button onclick=next(3) class="next"></button>
+                        <button onclick=prev(3) class="back"></button>
+                        <a class="volveraherramientas" href="herramientas.html">
+                            Volver a herramientas
+                        </a>
+                    </div>
+
                 </form>
 
             </section>
@@ -466,17 +562,15 @@
                         margin-right: 20%;
                     ">
                     <input name="colonia" type="text" placeholder="Colonia">
-                    <input name="alcaldia" type="text" placeholder="Alcaldia">
+                    <input name="alcaldía" type="text" placeholder="Alcaldía">
                     <input name="ciudad" type="text" placeholder="Ciudad" style="
                         margin-right: 20%;
                     ">
                     <input name="CP" type="text" placeholder="Cp" style="
                         /* margin-left: 100%; */
                     ">
-                    <textarea name="referencias" id="" cols="70" rows="10" style="
+                    <textarea name="referencias" id="" cols="85" rows="10" style="
                         margin-right: 100%;
-                        font-family: inherit;
-                        font-size: inherit;
                     " placeholder="Referencias (entre calles, parques, referencias visuales, etc)."></textarea>
                 </div>
                 <div>
@@ -486,12 +580,13 @@
                 </div>
 
 
-                <button onclick=next(4) class="next"></button>
-                <button onclick=prev(4) class="back"></button>
-                <a class="volveraherramientas" href="herramientas.html"
-                    style="                 background: #ef4746;                 margin: 10px;                 width: 200px;                 position: relative;top:10px;">Volver
-                    a herramientas <img src="svg/volveraherramientas.svg"
-                        style="height:20px;width: 20px;position: relative;top: -15px;"> </a>
+                <div class="controles">
+                    <button onclick=next(4) class="next"></button>
+                    <button onclick=prev(4) class="back"></button>
+                    <a class="volveraherramientas" href="herramientas.html">
+                        Volver a herramientas
+                    </a>
+                </div>
 
 
 
@@ -530,12 +625,13 @@
                 </form>
 
 
-                <button onclick=next(5) class="next"></button>
-                <button onclick=prev(5) class="back"></button>
-                <a class="volveraherramientas" href="herramientas.html"
-                    style="                 background: #ef4746;                 margin: 10px;                 width: 200px;                 position: relative;top:10px;">Volver
-                    a herramientas <img src="svg/volveraherramientas.svg"
-                        style="height:20px;width: 20px;position: relative;top: -15px;"> </a>
+                <div class="controles">
+                    <button onclick=next(5) class="next"></button>
+                    <button onclick=prev(5) class="back"></button>
+                    <a class="volveraherramientas" href="herramientas.html">
+                        Volver a herramientas
+                    </a>
+                </div>
 
             </section>
 
@@ -570,12 +666,13 @@
                 margin: auto;
             ">
 
-                    <button onclick="next(6)" class="next"></button>
-                    <button onclick="prev(6)" class="back"></button>
-                    <a class="volveraherramientas" href="herramientas.html"
-                        style="                 background: #ef4746;                 margin: 10px;                 width: 200px;                 position: relative;top:10px;">Volver
-                        a herramientas <img src="svg/volveraherramientas.svg"
-                            style="height:20px;width: 20px;position: relative;top: -15px;"> </a>
+                    <div class="controles">
+                        <button onclick=next(6) class="next"></button>
+                        <button onclick=prev(6) class="back"></button>
+                        <a class="volveraherramientas" href="herramientas.html">
+                            Volver a herramientas
+                        </a>
+                    </div>
                 </div>
 
 
@@ -613,7 +710,37 @@
                         Magdalena Contreras, C.P. 10200 en la Ciudad de México.</p>
                 </div>
 
-                <a href="test.pdf" download="DenunciaCNDH.pdf"><button class="download" style="
+
+                <script>
+                    function fix() {
+
+
+                        document.querySelector("#cover").style.display = "initial"
+
+                        f = () => document.querySelector("#cover").style.opacity = "1"
+
+                        g = () => document.body.style.backgroundPositionY = "-382px"
+
+                        h = () => document.querySelector("#aaa").click()
+
+                        i = () => document.querySelector("#cover").style.opacity = "0"
+
+                        setTimeout(f, 100)
+                        setTimeout(g, 200)
+                        setTimeout(h, 500)
+                        setTimeout(i, 3000)
+
+                        setTimeout(g, 1000)
+
+                    }
+
+                </script>
+
+
+                <div>
+
+                    <a id=aaa onmousedown="fix()" href="test.pdf" download="DenunciaCNDH.pdf"><button class="download"
+                            style="
                     background-image: url(svg/download.svg);
                     background-repeat: no-repeat;
                     background-size: contain;
@@ -626,19 +753,14 @@
                     border-radius: 0;
                     margin: 10px;
                 ">
-                        Descarga tu<br> documento
-                    </button></a>
-                <button onclick=prev(7) class="back" style="position: relative;
+                            Descarga tu<br> documento
+                        </button></a>
+                    <button onclick=prev(7) class="back" style="position: relative;
                 top: 15px;"></button>
-                <a class="volveraherramientas" href="herramientas.html" style="
-                background: #ef4746;
-                margin: 10px;
-                width: 200px;
-                position: relative;
-                top: 30px;
-            ">Volver a herramientas <img src="svg/volveraherramientas.svg"
-                        style="height:20px;width: 20px;position: relative;top: -20px;"> </a>
-                <a href="index.html" style="
+                    <a class="volveraherramientas" href="herramientas.html">
+                        Volver a herramientas
+                    </a>
+                    <a href="index.html" style="
                 /* background: #ef4746; */
                 margin: 10px;
                 /* width: 200px; */
@@ -650,6 +772,7 @@
                 position: relative;
                 top: 20px;
             "></a>
+                </div>
 
 
 
@@ -659,6 +782,25 @@
 
         </div>
     </main>
+
+    <div id="cover" style="
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #ef4746;
+    opacity: 0;
+    display: none;
+	transition:0.5s;
+">
+
+        <h2 style="
+    margin-top: 45vh;
+    text-align: center;
+">Tu archivo se está descargando...</h2>
+
+    </div>
 </body>
 
 </html>
